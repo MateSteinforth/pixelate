@@ -55,8 +55,8 @@ pc.extend(pc, function () {
             // Set the input render target to the shader. This is the image rendered from our camera
             scope.resolve("uColorBuffer").setValue(inputTarget.colorBuffer);
             
-            this.resolution[0] = inputTarget.width;
-            this.resolution[1] = inputTarget.height;
+            this.resolution[0] = device.width;
+            this.resolution[1] = device.height;
             scope.resolve("uResolution").setValue(this.resolution);       
             
             scope.resolve("uPixelize").setValue(this.pixelize);
@@ -78,6 +78,9 @@ var PostEffectPixelate = pc.createScript('PostEffectPixelate');
 
 PostEffectPixelate.attributes.add('pixelize', {
     type: 'number',
+    min: 2,
+    max: 256,
+    step: 1,
     default: 100
 });
 
@@ -100,6 +103,6 @@ PostEffectPixelate.prototype.initialize = function() {
     });
     
     this.on('attr:pixelize', function (value, prev) {
-        this.pixelize = value;
+        effect.pixelize = value;
     });
 };
